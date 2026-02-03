@@ -23,7 +23,3 @@ Update the connection details in:
 If you don't have the Maven exec plugin, you can run the jar with:
 - `java -cp target/campus-event-rsvp-tracker-1.0.0.jar:~/.m2/repository/com/mysql/mysql-connector-j/9.2.0/mysql-connector-j-9.2.0.jar com.campus.rsvp.Main`
 
-## Screenshots to capture
-- Database diagram of tables (MySQL Workbench or similar).
-- Query showing 50+ total rows across tables.
-- Console app running and listing records.
