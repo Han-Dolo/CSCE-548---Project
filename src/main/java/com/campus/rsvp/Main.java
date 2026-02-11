@@ -1,13 +1,14 @@
 package com.campus.rsvp;
 
-import com.campus.rsvp.dao.AttendeeDao;
-import com.campus.rsvp.dao.EventDao;
-import com.campus.rsvp.dao.RsvpDao;
-import com.campus.rsvp.dao.VenueDao;
+import com.campus.rsvp.business.BusinessManager;
 import com.campus.rsvp.model.Attendee;
 import com.campus.rsvp.model.Event;
 import com.campus.rsvp.model.Rsvp;
 import com.campus.rsvp.model.Venue;
+import com.campus.rsvp.service.AttendeeService;
+import com.campus.rsvp.service.EventService;
+import com.campus.rsvp.service.RsvpService;
+import com.campus.rsvp.service.VenueService;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -17,10 +18,11 @@ import java.util.Scanner;
 
 public class Main {
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static final EventDao EVENT_DAO = new EventDao();
-    private static final VenueDao VENUE_DAO = new VenueDao();
-    private static final AttendeeDao ATTENDEE_DAO = new AttendeeDao();
-    private static final RsvpDao RSVP_DAO = new RsvpDao();
+    private static final BusinessManager BUSINESS = new BusinessManager();
+    private static final EventService EVENT_SERVICE = new EventService(BUSINESS);
+    private static final VenueService VENUE_SERVICE = new VenueService(BUSINESS);
+    private static final AttendeeService ATTENDEE_SERVICE = new AttendeeService(BUSINESS);
+    private static final RsvpService RSVP_SERVICE = new RsvpService(BUSINESS);
 
     public static void main(String[] args) {
         boolean running = true;
@@ -77,7 +79,7 @@ public class Main {
     }
 
     private static void listEvents() throws SQLException {
-        List<Event> events = EVENT_DAO.getAll();
+        List<Event> events = EVENT_SERVICE.getAll();
         if (events.isEmpty()) {
             System.out.println("No events found.");
             return;
@@ -86,7 +88,7 @@ public class Main {
     }
 
     private static void listVenues() throws SQLException {
-        List<Venue> venues = VENUE_DAO.getAll();
+        List<Venue> venues = VENUE_SERVICE.getAll();
         if (venues.isEmpty()) {
             System.out.println("No venues found.");
             return;
@@ -95,7 +97,7 @@ public class Main {
     }
 
     private static void listAttendees() throws SQLException {
-        List<Attendee> attendees = ATTENDEE_DAO.getAll();
+        List<Attendee> attendees = ATTENDEE_SERVICE.getAll();
         if (attendees.isEmpty()) {
             System.out.println("No attendees found.");
             return;
@@ -105,7 +107,7 @@ public class Main {
 
     private static void listRsvpsForEvent() throws SQLException {
         int eventId = readInt("Event ID: ");
-        List<Rsvp> rsvps = RSVP_DAO.getByEvent(eventId);
+        List<Rsvp> rsvps = RSVP_SERVICE.getByEvent(eventId);
         if (rsvps.isEmpty()) {
             System.out.println("No RSVPs found for event " + eventId + ".");
             return;
@@ -125,7 +127,7 @@ public class Main {
         String category = readLine("Category: ");
 
         Event event = new Event(0, title, description, date, start, end, venueId, organizer, category);
-        int id = EVENT_DAO.create(event);
+        int id = EVENT_SERVICE.save(event);
         System.out.println("Created event with ID: " + id);
     }
 
@@ -138,7 +140,7 @@ public class Main {
         boolean outdoor = readBoolean("Outdoor? (true/false): ");
 
         Venue venue = new Venue(0, name, building, room, capacity, outdoor);
-        int id = VENUE_DAO.create(venue);
+        int id = VENUE_SERVICE.save(venue);
         System.out.println("Created venue with ID: " + id);
     }
 
@@ -151,7 +153,7 @@ public class Main {
         int classYear = readInt("Class year: ");
 
         Attendee attendee = new Attendee(0, first, last, email, major, classYear);
-        int id = ATTENDEE_DAO.create(attendee);
+        int id = ATTENDEE_SERVICE.save(attendee);
         System.out.println("Created attendee with ID: " + id);
     }
 
@@ -163,7 +165,7 @@ public class Main {
         boolean checkedIn = readBoolean("Checked in? (true/false): ");
 
         Rsvp rsvp = new Rsvp(0, eventId, attendeeId, status, checkedIn, null);
-        int id = RSVP_DAO.create(rsvp);
+        int id = RSVP_SERVICE.save(rsvp);
         System.out.println("Created RSVP with ID: " + id);
     }
 
@@ -173,38 +175,38 @@ public class Main {
         String status = readLine("New status: ");
         boolean checkedIn = readBoolean("Checked in? (true/false): ");
 
-        Rsvp existing = RSVP_DAO.getById(rsvpId);
+        Rsvp existing = RSVP_SERVICE.getById(rsvpId);
         if (existing == null) {
             System.out.println("RSVP not found.");
             return;
         }
         existing.setStatus(status);
         existing.setCheckedIn(checkedIn);
-        RSVP_DAO.update(existing);
+        RSVP_SERVICE.save(existing);
         System.out.println("RSVP updated.");
     }
 
     private static void deleteEvent() throws SQLException {
         int eventId = readInt("Event ID to delete: ");
-        boolean deleted = EVENT_DAO.delete(eventId);
+        boolean deleted = EVENT_SERVICE.delete(eventId);
         System.out.println(deleted ? "Event deleted." : "Event not found.");
     }
 
     private static void deleteVenue() throws SQLException {
         int venueId = readInt("Venue ID to delete: ");
-        boolean deleted = VENUE_DAO.delete(venueId);
+        boolean deleted = VENUE_SERVICE.delete(venueId);
         System.out.println(deleted ? "Venue deleted." : "Venue not found.");
     }
 
     private static void deleteAttendee() throws SQLException {
         int attendeeId = readInt("Attendee ID to delete: ");
-        boolean deleted = ATTENDEE_DAO.delete(attendeeId);
+        boolean deleted = ATTENDEE_SERVICE.delete(attendeeId);
         System.out.println(deleted ? "Attendee deleted." : "Attendee not found.");
     }
 
     private static void deleteRsvp() throws SQLException {
         int rsvpId = readInt("RSVP ID to delete: ");
-        boolean deleted = RSVP_DAO.delete(rsvpId);
+        boolean deleted = RSVP_SERVICE.delete(rsvpId);
         System.out.println(deleted ? "RSVP deleted." : "RSVP not found.");
     }
 
