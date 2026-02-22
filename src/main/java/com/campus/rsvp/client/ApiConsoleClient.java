@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
 public class ApiConsoleClient {
-    private static final String BASE_URL = "http://localhost:8080";
+    private static final String BASE_URL = "http://localhost:8081";
     private static final HttpClient CLIENT = HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(5))
             .build();
