@@ -85,6 +85,34 @@ If you want to access it from another device on the same network:
 2. Open your firewall for port `8080` (if needed).
 3. Access `http://<your-ip>:8080/api/events` from the other device.
 
+## Project 3 frontend (web client)
+The project now includes a browser client served by Spring Boot static hosting.
+
+Files:
+- `src/main/resources/static/index.html`
+- `src/main/resources/static/styles.css`
+- `src/main/resources/static/app.js`
+
+Run:
+1. Start MySQL and run `sql/schema.sql` then `sql/seed.sql`.
+2. Start the API:
+   - `mvn -q spring-boot:run -Dspring-boot.run.mainClass="com.campus.rsvp.api.RsvpApiApplication"`
+3. Open:
+   - `http://localhost:8080/`
+
+The web client supports:
+1. `GET all` and `GET by id` for venues, attendees, events, and RSVPs.
+2. Subset query: `GET /api/rsvps/event/{eventId}`.
+3. Create/update via `POST` for all tables.
+4. Delete via `DELETE` for all tables.
+
+## Project 3 deliverable notes
+1. Overview document template:
+   - `docs/Project3_Overview.md`
+2. Save screenshots under:
+   - `docs/screenshots/`
+3. Combine screenshots into one PDF before Blackboard submission.
+
 ## Architecture diagram
 - `docs/architecture.md`
 

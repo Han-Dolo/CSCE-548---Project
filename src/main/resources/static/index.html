@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus RSVP Client</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="hero">
+    <h1>Campus Event RSVP Client</h1>
+    <p>Project 3 frontend for Campus RSVP API</p>
+  </header>
+
+  <main class="layout">
+    <section class="card">
+      <h2>Connection</h2>
+      <div class="row">
+        <button id="btnHealth">Test API (GET /api/events)</button>
+      </div>
+      <pre id="healthOut" class="output"></pre>
+    </section>
+
+    <section class="card">
+      <h2>Venues</h2>
+      <div class="row">
+        <button id="venuesGetAll">GET /api/venues</button>
+        <input id="venuesGetId" type="number" placeholder="venueId">
+        <button id="venuesGetOne">GET /api/venues/{id}</button>
+      </div>
+      <form id="venuesForm" class="form-grid">
+        <input id="venueId" type="number" placeholder="venueId (0 for create)" value="0">
+        <input id="venueName" type="text" placeholder="name" required>
+        <input id="venueBuilding" type="text" placeholder="building" required>
+        <input id="venueRoom" type="text" placeholder="room" required>
+        <input id="venueCapacity" type="number" placeholder="capacity" required>
+        <label class="checkbox"><input id="venueOutdoor" type="checkbox"> Outdoor</label>
+        <button type="submit">POST /api/venues (Create/Update)</button>
+      </form>
+      <div class="row">
+        <input id="venuesDeleteId" type="number" placeholder="venueId">
+        <button id="venuesDelete">DELETE /api/venues/{id}</button>
+      </div>
+      <pre id="venuesOut" class="output"></pre>
+    </section>
+
+    <section class="card">
+      <h2>Attendees</h2>
+      <div class="row">
+        <button id="attendeesGetAll">GET /api/attendees</button>
+        <input id="attendeesGetId" type="number" placeholder="attendeeId">
+        <button id="attendeesGetOne">GET /api/attendees/{id}</button>
+      </div>
+      <form id="attendeesForm" class="form-grid">
+        <input id="attendeeId" type="number" placeholder="attendeeId (0 for create)" value="0">
+        <input id="attendeeFirstName" type="text" placeholder="firstName" required>
+        <input id="attendeeLastName" type="text" placeholder="lastName" required>
+        <input id="attendeeEmail" type="email" placeholder="email" required>
+        <input id="attendeeMajor" type="text" placeholder="major" required>
+        <input id="attendeeClassYear" type="number" placeholder="classYear" required>
+        <button type="submit">POST /api/attendees (Create/Update)</button>
+      </form>
+      <div class="row">
+        <input id="attendeesDeleteId" type="number" placeholder="attendeeId">
+        <button id="attendeesDelete">DELETE /api/attendees/{id}</button>
+      </div>
+      <pre id="attendeesOut" class="output"></pre>
+    </section>
+
+    <section class="card">
+      <h2>Events</h2>
+      <div class="row">
+        <button id="eventsGetAll">GET /api/events</button>
+        <input id="eventsGetId" type="number" placeholder="eventId">
+        <button id="eventsGetOne">GET /api/events/{id}</button>
+      </div>
+      <form id="eventsForm" class="form-grid">
+        <input id="eventId" type="number" placeholder="eventId (0 for create)" value="0">
+        <input id="eventTitle" type="text" placeholder="title" required>
+        <input id="eventDescription" type="text" placeholder="description" required>
+        <input id="eventDate" type="date" required>
+        <input id="eventStartTime" type="time" required>
+        <input id="eventEndTime" type="time" required>
+        <input id="eventVenueId" type="number" placeholder="venueId" required>
+        <input id="eventOrganizer" type="text" placeholder="organizer" required>
+        <input id="eventCategory" type="text" placeholder="category" required>
+        <button type="submit">POST /api/events (Create/Update)</button>
+      </form>
+      <div class="row">
+        <input id="eventsDeleteId" type="number" placeholder="eventId">
+        <button id="eventsDelete">DELETE /api/events/{id}</button>
+      </div>
+      <pre id="eventsOut" class="output"></pre>
+    </section>
+
+    <section class="card">
+      <h2>RSVPs</h2>
+      <div class="row">
+        <button id="rsvpsGetAll">GET /api/rsvps</button>
+        <input id="rsvpsGetId" type="number" placeholder="rsvpId">
+        <button id="rsvpsGetOne">GET /api/rsvps/{id}</button>
+      </div>
+      <div class="row">
+        <input id="rsvpsEventId" type="number" placeholder="eventId">
+        <button id="rsvpsGetByEvent">GET /api/rsvps/event/{eventId}</button>
+      </div>
+      <form id="rsvpsForm" class="form-grid">
+        <input id="rsvpId" type="number" placeholder="rsvpId (0 for create)" value="0">
+        <input id="rsvpEventId" type="number" placeholder="eventId" required>
+        <input id="rsvpAttendeeId" type="number" placeholder="attendeeId" required>
+        <select id="rsvpStatus" required>
+          <option value="Going">Going</option>
+          <option value="Interested">Interested</option>
+          <option value="Not Going">Not Going</option>
+        </select>
+        <label class="checkbox"><input id="rsvpCheckedIn" type="checkbox"> Checked In</label>
+        <button type="submit">POST /api/rsvps (Create/Update)</button>
+      </form>
+      <div class="row">
+        <input id="rsvpsDeleteId" type="number" placeholder="rsvpId">
+        <button id="rsvpsDelete">DELETE /api/rsvps/{id}</button>
+      </div>
+      <pre id="rsvpsOut" class="output"></pre>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
