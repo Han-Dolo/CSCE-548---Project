@@ -106,12 +106,6 @@ The web client supports:
 3. Create/update via `POST` for all tables.
 4. Delete via `DELETE` for all tables.
 
-## Project 3 deliverable notes
-1. Overview document template:
-   - `docs/Project3_Overview.md`
-2. Save screenshots under:
-   - `docs/screenshots/`
-3. Combine screenshots into one PDF before Blackboard submission.
 
 ## Architecture diagram
 - `docs/architecture.md`
