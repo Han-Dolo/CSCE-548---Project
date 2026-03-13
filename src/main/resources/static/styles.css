@@ -35,6 +35,10 @@ body {
   color: var(--muted);
 }
 
+.hint {
+  font-size: 0.9rem;
+}
+
 .layout {
   width: min(1200px, 95vw);
   margin: 0 auto 2rem;
@@ -98,21 +102,66 @@ button:hover {
 }
 
 .output {
-  margin: 0;
-  min-height: 120px;
+  margin: 0.3rem 0 0;
+  min-height: 90px;
   max-height: 260px;
   overflow: auto;
-  background: #0f172a;
-  color: #d7e4ff;
+  background: #f8fbff;
+  color: var(--ink);
+  border: 1px solid var(--line);
   border-radius: 8px;
   padding: 0.75rem;
-  font-size: 0.82rem;
+  font-size: 0.9rem;
 }
 
 .error {
-  color: #ffd4d4;
+  color: var(--danger);
   border-left: 3px solid var(--danger);
-  padding-left: 0.5rem;
+}
+
+.result-title {
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.result-message {
+  margin-bottom: 0.5rem;
+  color: #2f3c50;
+}
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.result-table th,
+.result-table td {
+  border: 1px solid var(--line);
+  padding: 0.4rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.result-table th {
+  background: #e9f2ff;
+}
+
+.pill {
+  display: inline-block;
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.pill-ok {
+  background: #dbf5df;
+  color: #205929;
+}
+
+.pill-bad {
+  background: #ffe0e0;
+  color: #7d1717;
 }
 
 @media (max-width: 720px) {

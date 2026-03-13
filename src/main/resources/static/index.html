@@ -10,23 +10,24 @@
   <header class="hero">
     <h1>Campus Event RSVP Client</h1>
     <p>Project 3 frontend for Campus RSVP API</p>
+    <p class="hint">Tip: use id 0 to create new records, or an existing id to update.</p>
   </header>
 
   <main class="layout">
     <section class="card">
       <h2>Connection</h2>
       <div class="row">
-        <button id="btnHealth">Test API (GET /api/events)</button>
+        <button id="btnHealth">Check Connection</button>
       </div>
-      <pre id="healthOut" class="output"></pre>
+      <div id="healthOut" class="output"></div>
     </section>
 
     <section class="card">
       <h2>Venues</h2>
       <div class="row">
-        <button id="venuesGetAll">GET /api/venues</button>
+        <button id="venuesGetAll">Show All Venues</button>
         <input id="venuesGetId" type="number" placeholder="venueId">
-        <button id="venuesGetOne">GET /api/venues/{id}</button>
+        <button id="venuesGetOne">Find Venue by ID</button>
       </div>
       <form id="venuesForm" class="form-grid">
         <input id="venueId" type="number" placeholder="venueId (0 for create)" value="0">
@@ -35,21 +36,21 @@
         <input id="venueRoom" type="text" placeholder="room" required>
         <input id="venueCapacity" type="number" placeholder="capacity" required>
         <label class="checkbox"><input id="venueOutdoor" type="checkbox"> Outdoor</label>
-        <button type="submit">POST /api/venues (Create/Update)</button>
+        <button type="submit">Save Venue (Create/Update)</button>
       </form>
       <div class="row">
         <input id="venuesDeleteId" type="number" placeholder="venueId">
-        <button id="venuesDelete">DELETE /api/venues/{id}</button>
+        <button id="venuesDelete">Delete Venue by ID</button>
       </div>
-      <pre id="venuesOut" class="output"></pre>
+      <div id="venuesOut" class="output"></div>
     </section>
 
     <section class="card">
       <h2>Attendees</h2>
       <div class="row">
-        <button id="attendeesGetAll">GET /api/attendees</button>
+        <button id="attendeesGetAll">Show All Attendees</button>
         <input id="attendeesGetId" type="number" placeholder="attendeeId">
-        <button id="attendeesGetOne">GET /api/attendees/{id}</button>
+        <button id="attendeesGetOne">Find Attendee by ID</button>
       </div>
       <form id="attendeesForm" class="form-grid">
         <input id="attendeeId" type="number" placeholder="attendeeId (0 for create)" value="0">
@@ -58,21 +59,21 @@
         <input id="attendeeEmail" type="email" placeholder="email" required>
         <input id="attendeeMajor" type="text" placeholder="major" required>
         <input id="attendeeClassYear" type="number" placeholder="classYear" required>
-        <button type="submit">POST /api/attendees (Create/Update)</button>
+        <button type="submit">Save Attendee (Create/Update)</button>
       </form>
       <div class="row">
         <input id="attendeesDeleteId" type="number" placeholder="attendeeId">
-        <button id="attendeesDelete">DELETE /api/attendees/{id}</button>
+        <button id="attendeesDelete">Delete Attendee by ID</button>
       </div>
-      <pre id="attendeesOut" class="output"></pre>
+      <div id="attendeesOut" class="output"></div>
     </section>
 
     <section class="card">
       <h2>Events</h2>
       <div class="row">
-        <button id="eventsGetAll">GET /api/events</button>
+        <button id="eventsGetAll">Show All Events</button>
         <input id="eventsGetId" type="number" placeholder="eventId">
-        <button id="eventsGetOne">GET /api/events/{id}</button>
+        <button id="eventsGetOne">Find Event by ID</button>
       </div>
       <form id="eventsForm" class="form-grid">
         <input id="eventId" type="number" placeholder="eventId (0 for create)" value="0">
@@ -84,25 +85,25 @@
         <input id="eventVenueId" type="number" placeholder="venueId" required>
         <input id="eventOrganizer" type="text" placeholder="organizer" required>
         <input id="eventCategory" type="text" placeholder="category" required>
-        <button type="submit">POST /api/events (Create/Update)</button>
+        <button type="submit">Save Event (Create/Update)</button>
       </form>
       <div class="row">
         <input id="eventsDeleteId" type="number" placeholder="eventId">
-        <button id="eventsDelete">DELETE /api/events/{id}</button>
+        <button id="eventsDelete">Delete Event by ID</button>
       </div>
-      <pre id="eventsOut" class="output"></pre>
+      <div id="eventsOut" class="output"></div>
     </section>
 
     <section class="card">
       <h2>RSVPs</h2>
       <div class="row">
-        <button id="rsvpsGetAll">GET /api/rsvps</button>
+        <button id="rsvpsGetAll">Show All RSVPs</button>
         <input id="rsvpsGetId" type="number" placeholder="rsvpId">
-        <button id="rsvpsGetOne">GET /api/rsvps/{id}</button>
+        <button id="rsvpsGetOne">Find RSVP by ID</button>
       </div>
       <div class="row">
         <input id="rsvpsEventId" type="number" placeholder="eventId">
-        <button id="rsvpsGetByEvent">GET /api/rsvps/event/{eventId}</button>
+        <button id="rsvpsGetByEvent">Show RSVPs by Event ID</button>
       </div>
       <form id="rsvpsForm" class="form-grid">
         <input id="rsvpId" type="number" placeholder="rsvpId (0 for create)" value="0">
@@ -114,13 +115,13 @@
           <option value="Not Going">Not Going</option>
         </select>
         <label class="checkbox"><input id="rsvpCheckedIn" type="checkbox"> Checked In</label>
-        <button type="submit">POST /api/rsvps (Create/Update)</button>
+        <button type="submit">Save RSVP (Create/Update)</button>
       </form>
       <div class="row">
         <input id="rsvpsDeleteId" type="number" placeholder="rsvpId">
-        <button id="rsvpsDelete">DELETE /api/rsvps/{id}</button>
+        <button id="rsvpsDelete">Delete RSVP by ID</button>
       </div>
-      <pre id="rsvpsOut" class="output"></pre>
+      <div id="rsvpsOut" class="output"></div>
     </section>
   </main>
 
