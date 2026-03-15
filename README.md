@@ -110,4 +110,4 @@ Successful setup is indicated by:
 - Schema and seed scripts: `sql/schema.sql`, `sql/seed.sql`
 
 ## Current Verification Status
-The project compiles successfully with Maven in the current workspace. A live end-to-end system test still requires a running MySQL server so the API and frontend can be exercised against the database.
+The project was built and tested successfully. Full deployment instructions and system test evidence are included in `Project4_Deployment_and_System_Test.pdf` or `Project4_Deployment_and_System_Test.md` .
