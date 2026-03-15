@@ -66,14 +66,11 @@ export DB_PASSWORD=your_password
 - `POST /api/venues`
 - `DELETE /api/venues/{id}`
 
-<<<<<<< HEAD
-=======
 ### Attendees
 - `GET /api/attendees`
 - `GET /api/attendees/{id}`
 - `POST /api/attendees`
 - `DELETE /api/attendees/{id}`
->>>>>>> aa3039d (Add Project 4 documentation, screenshots, and final app updates)
 
 ### Events
 - `GET /api/events`
