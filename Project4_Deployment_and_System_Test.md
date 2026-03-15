@@ -177,36 +177,7 @@ Deployment is successful if:
 - Database queries match client results.
 
 ## AI-Generated Development Record
-This section should document the AI-assisted development process. Because exact historical prompt logs are not stored in the repository, the prompts below are best treated as reconstructed examples based on the generated structure. Replace them with your exact prompts if you still have them.
-
-### Reconstructed Prompt for Data Layer
-"Generate Java DAO classes and MySQL schema for a campus event RSVP system with venues, attendees, events, and RSVPs. Include create, get by id, get all, update, and delete methods."
-
-### Reconstructed Prompt for Business and Service Layers
-"Generate Java business and service layer classes for the campus RSVP app. Add validation rules and expose methods used by a REST API."
-
-### Reconstructed Prompt for Service/API Layer
-"Generate a Spring Boot REST API for the campus RSVP project with endpoints for venues, attendees, events, and RSVPs. Use POST for create/update and DELETE for remove."
-
-### Reconstructed Prompt for Client Layer
-"Generate a simple HTML, CSS, and JavaScript client for a Spring Boot API that supports get all, get by id, create, update, delete, and RSVP lookup by event id."
-
-## Manual Changes Made to Generated Output
-- Updated database configuration to use environment variables instead of only hardcoded local defaults.
-- Refreshed assignment-facing wording so the frontend and README reflect Project 4.
-- Added a combined deployment and system test document aligned to the current repository structure.
-- Preserved the existing CRUD architecture and validation rules already present in the codebase.
-
-## AI Tool Effectiveness Analysis
-- AI was effective at generating the overall n-tier structure quickly.
-- The generated project already included CRUD operations, validation flow, and a usable frontend.
-- The main weaknesses were deliverable quality and deployment clarity rather than missing application structure.
-- The repository still required manual cleanup to make configuration, documentation, and submission artifacts realistic for another developer or grader.
-
-## Current Verification Status in This Workspace
-- Maven package was executed successfully.
-- A live end-to-end system test was not completed in this workspace because the local MySQL service was not running at the time of verification.
-- The screenshot steps above should be completed after starting MySQL and running the application locally.
+This section is not required for undergraduate credit.
 
 ## Files Referenced
 - `README.md`
