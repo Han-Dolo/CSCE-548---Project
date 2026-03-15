@@ -1,115 +1,116 @@
-# Campus Event RSVP Tracker (Console, Java)
+# Campus Event RSVP Tracker
 
-This project includes:
-- SQL scripts to create a 4-table database and seed it with test data.
-- Java data access layer with full CRUD for each table.
-- Console UI to retrieve and manage records.
+Campus Event RSVP Tracker is a Java n-tier application for managing campus venues, events, attendees, and RSVPs. The project includes a MySQL data layer, Java DAO/business/service layers, a Spring Boot REST API, and a browser client served from the same application.
 
-## Database setup (MySQL)
-1. Start your MySQL server.
-2. Run the schema script:
-   - `sql/schema.sql`
-3. Run the seed script:
-   - `sql/seed.sql`
+This repository is organized for CSCE 548 Project 4 and includes:
+- Full CRUD support across venues, attendees, events, and RSVPs.
+- A hosted service layer in Spring Boot under `http://localhost:8080`.
+- A client layer served from Spring Boot static assets.
+- SQL scripts for schema creation and seed data.
+- A combined deployment and system test document for submission.
 
-## Java setup
-Update the connection details in:
-- `src/main/java/com/campus/rsvp/db/ConnectionManager.java`
+## Tech Stack
+- Java 17
+- Maven
+- Spring Boot 3.3.2
+- MySQL 8+
+- HTML, CSS, and vanilla JavaScript
 
-## Build and run (Maven)
-1. `mvn -q -e -DskipTests package`
-2. `mvn -q exec:java -Dexec.mainClass="com.campus.rsvp.Main"`
+## Repository Layout
+- `src/main/java/com/campus/rsvp/dao`: data access layer
+- `src/main/java/com/campus/rsvp/business`: business layer
+- `src/main/java/com/campus/rsvp/service`: service layer used by the controllers
+- `src/main/java/com/campus/rsvp/api`: REST API and error handling
+- `src/main/resources/static`: hosted frontend
+- `sql/schema.sql`: database creation script
+- `sql/seed.sql`: sample data
+- `Project4_Deployment_and_System_Test.md`: full deployment and verification guide
 
-If you don't have the Maven exec plugin, you can run the jar with:
-- `java -cp target/campus-event-rsvp-tracker-1.0.0.jar:~/.m2/repository/com/mysql/mysql-connector-j/9.2.0/mysql-connector-j-9.2.0.jar com.campus.rsvp.Main`
+## Prerequisites
+- JDK 17
+- Maven 3.9+
+- MySQL Server running locally or reachable by connection string
+- Optional: IntelliJ IDEA or VS Code with Java support
 
-## Service layer (Spring Boot REST API)
-Run the API:
-1. `mvn -q -DskipTests package`
-2. `mvn -q spring-boot:run -Dspring-boot.run.mainClass="com.campus.rsvp.api.RsvpApiApplication"`
+## Database Configuration
+The application reads database settings from environment variables:
+- `DB_URL` default: `jdbc:mysql://localhost:3306/campus_rsvp`
+- `DB_USER` default: `root`
+- `DB_PASSWORD` default: empty string
 
-Base URL: `http://localhost:8080`
+Example:
 
-Endpoints:
-1. `GET /api/events`
-2. `GET /api/events/{id}`
-3. `POST /api/events`
-4. `DELETE /api/events/{id}`
-5. `GET /api/venues`
-6. `GET /api/venues/{id}`
-7. `POST /api/venues`
-8. `DELETE /api/venues/{id}`
-9. `GET /api/attendees`
-10. `GET /api/attendees/{id}`
-11. `POST /api/attendees`
-12. `DELETE /api/attendees/{id}`
-13. `GET /api/rsvps`
-14. `GET /api/rsvps/{id}`
-15. `GET /api/rsvps/event/{eventId}`
-16. `POST /api/rsvps`
-17. `DELETE /api/rsvps/{id}`
-
-Sample JSON (Event):
-```json
-{
-  "eventId": 0,
-  "title": "Campus Career Fair",
-  "description": "Meet employers and network.",
-  "eventDate": "2026-03-20",
-  "startTime": "10:00:00",
-  "endTime": "14:00:00",
-  "venueId": 1,
-  "organizer": "Career Services",
-  "category": "Career"
-}
+```bash
+export DB_URL=jdbc:mysql://localhost:3306/campus_rsvp
+export DB_USER=root
+export DB_PASSWORD=your_password
 ```
 
-## Console API tester
-Run the Spring Boot API first, then run:
-1. `mvn -q exec:java@run-api-tester`
-
-This script will:
-1. Create a venue, attendee, event, and RSVP
-2. Update the event and RSVP
-3. List all records for each table
-4. Delete the records it created
-
-## Hosting (local laptop)
-1. Start MySQL and load `sql/schema.sql` and `sql/seed.sql`.
-2. Start the API using the `spring-boot:run` command above.
-3. Keep the terminal open so the service stays running.
-4. Your service is hosted locally at `http://localhost:8080`.
-
-If you want to access it from another device on the same network:
-1. Find your laptop IP address (for example, `192.168.x.x`).
-2. Open your firewall for port `8080` (if needed).
-3. Access `http://<your-ip>:8080/api/events` from the other device.
-
-## Project 3 frontend (web client)
-The project now includes a browser client served by Spring Boot static hosting.
-
-Files:
-- `src/main/resources/static/index.html`
-- `src/main/resources/static/styles.css`
-- `src/main/resources/static/app.js`
-
-Run:
-1. Start MySQL and run `sql/schema.sql` then `sql/seed.sql`.
-2. Start the API:
+## Setup and Run
+1. Start MySQL.
+2. Load the schema:
+   - `mysql -u root -p < sql/schema.sql`
+3. Load seed data:
+   - `mysql -u root -p < sql/seed.sql`
+4. Build the project:
+   - `mvn -q -DskipTests package`
+5. Start the API and frontend host:
    - `mvn -q spring-boot:run -Dspring-boot.run.mainClass="com.campus.rsvp.api.RsvpApiApplication"`
-3. Open:
+6. Open the web client:
    - `http://localhost:8080/`
 
-The web client supports:
-1. `GET all` and `GET by id` for venues, attendees, events, and RSVPs.
-2. Subset query: `GET /api/rsvps/event/{eventId}`.
-3. Create/update via `POST` for all tables.
-4. Delete via `DELETE` for all tables.
+## API Endpoints
+### Venues
+- `GET /api/venues`
+- `GET /api/venues/{id}`
+- `POST /api/venues`
+- `DELETE /api/venues/{id}`
 
+<<<<<<< HEAD
+=======
+### Attendees
+- `GET /api/attendees`
+- `GET /api/attendees/{id}`
+- `POST /api/attendees`
+- `DELETE /api/attendees/{id}`
+>>>>>>> aa3039d (Add Project 4 documentation, screenshots, and final app updates)
 
-## Architecture diagram
-- `docs/architecture.md`
+### Events
+- `GET /api/events`
+- `GET /api/events/{id}`
+- `POST /api/events`
+- `DELETE /api/events/{id}`
 
-## Testing results (console)
-The console tester successfully ran create, update, list, and delete operations
-against the REST API.
+### RSVPs
+- `GET /api/rsvps`
+- `GET /api/rsvps/{id}`
+- `GET /api/rsvps/event/{eventId}`
+- `POST /api/rsvps`
+- `DELETE /api/rsvps/{id}`
+
+`POST` acts as an upsert in this project: submit `id = 0` to create or an existing id to update.
+
+## Frontend Capabilities
+The hosted web client supports:
+- Connection check
+- Get all records
+- Get one record by id
+- Create records
+- Update records
+- Delete records
+- Query RSVPs by event id
+
+## Verification
+Successful setup is indicated by:
+- `mvn -q -DskipTests package` completes without errors.
+- `http://localhost:8080/` loads the client UI.
+- `http://localhost:8080/api/events` returns JSON.
+- CRUD actions in the frontend return success and are reflected in the database.
+
+## Submission Artifacts
+- Full instructions and system test write-up: `Project4_Deployment_and_System_Test.md`
+- PDF submission artifact: `Project4_Deployment_and_System_Test.pdf`
+- Schema and seed scripts: `sql/schema.sql`, `sql/seed.sql`
+
+## Current Verification Status
+The project compiles successfully with Maven in the current workspace. A live end-to-end system test still requires a running MySQL server so the API and frontend can be exercised against the database.

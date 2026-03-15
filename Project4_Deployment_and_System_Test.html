@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CSCE 548 Project 4 Deployment and System Test</title>
+  <style>
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      margin: 40px auto;
+      max-width: 900px;
+      line-height: 1.45;
+      color: #111;
+    }
+    h1, h2, h3 { color: #0f3b57; }
+    code, pre {
+      font-family: Menlo, Monaco, monospace;
+      font-size: 0.92em;
+    }
+    pre {
+      background: #f4f6f8;
+      border: 1px solid #d7dee5;
+      padding: 12px;
+      overflow: auto;
+      white-space: pre-wrap;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 16px 0;
+    }
+    th, td {
+      border: 1px solid #c9d2da;
+      padding: 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+    ul, ol { padding-left: 22px; }
+    .note {
+      padding: 12px;
+      background: #fff8dd;
+      border: 1px solid #ead48a;
+    }
+  </style>
+</head>
+<body>
+  <h1>CSCE 548 Project 4 Deployment and System Test</h1>
+
+  <h2>Project Summary</h2>
+  <p>This repository contains a four-layer campus event RSVP application with a MySQL data layer, Java business and service layers, a Spring Boot REST API, and a browser frontend hosted from the same application.</p>
+
+  <h2>Prerequisites</h2>
+  <ul>
+    <li>Java 17</li>
+    <li>Maven 3.9+</li>
+    <li>MySQL Server 8+</li>
+    <li>An IDE or terminal environment</li>
+  </ul>
+
+  <h2>Download and Open</h2>
+  <ol>
+    <li>Download the repository ZIP from GitHub or clone it.</li>
+    <li>Extract the archive.</li>
+    <li>Open the project root that contains <code>pom.xml</code>, <code>sql/</code>, and <code>src/</code>.</li>
+  </ol>
+
+  <h2>Database Setup</h2>
+  <pre>mysql -u root -p &lt; sql/schema.sql
+mysql -u root -p &lt; sql/seed.sql</pre>
+
+  <p>Confirm setup:</p>
+  <pre>SHOW DATABASES;
+USE campus_rsvp;
+SHOW TABLES;
+SELECT COUNT(*) FROM venues;
+SELECT COUNT(*) FROM attendees;
+SELECT COUNT(*) FROM events;
+SELECT COUNT(*) FROM rsvps;</pre>
+
+  <h2>Environment Configuration</h2>
+  <p>The application reads these environment variables:</p>
+  <ul>
+    <li><code>DB_URL</code> default: <code>jdbc:mysql://localhost:3306/campus_rsvp</code></li>
+    <li><code>DB_USER</code> default: <code>root</code></li>
+    <li><code>DB_PASSWORD</code> default: empty</li>
+  </ul>
+  <pre>export DB_URL=jdbc:mysql://localhost:3306/campus_rsvp
+export DB_USER=root
+export DB_PASSWORD=your_password</pre>
+
+  <h2>Build and Host</h2>
+  <pre>mvn -q -DskipTests package
+mvn -q spring-boot:run -Dspring-boot.run.mainClass="com.campus.rsvp.api.RsvpApiApplication"</pre>
+
+  <p>After startup:</p>
+  <ul>
+    <li>API base URL: <code>http://localhost:8080</code></li>
+    <li>Frontend URL: <code>http://localhost:8080/</code></li>
+    <li>API check: <code>http://localhost:8080/api/events</code></li>
+  </ul>
+
+  <h2>System Test Checklist</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Client Action</th>
+        <th>Database Verification</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Launch</td>
+        <td>Open the frontend and click Check Connection.</td>
+        <td>API responds and event data is available.</td>
+      </tr>
+      <tr>
+        <td>Create Venue</td>
+        <td>Save a new venue with id 0.</td>
+        <td><code>SELECT * FROM venues ORDER BY venue_id DESC LIMIT 1;</code></td>
+      </tr>
+      <tr>
+        <td>Create Attendee</td>
+        <td>Save a new attendee with id 0.</td>
+        <td><code>SELECT * FROM attendees ORDER BY attendee_id DESC LIMIT 1;</code></td>
+      </tr>
+      <tr>
+        <td>Create Event</td>
+        <td>Save a new event using the new venue id.</td>
+        <td><code>SELECT * FROM events ORDER BY event_id DESC LIMIT 1;</code></td>
+      </tr>
+      <tr>
+        <td>Create RSVP</td>
+        <td>Save a new RSVP using the new event and attendee ids.</td>
+        <td><code>SELECT * FROM rsvps ORDER BY rsvp_id DESC LIMIT 1;</code></td>
+      </tr>
+      <tr>
+        <td>Get All</td>
+        <td>Use all four Show All buttons.</td>
+        <td>Compare with <code>SELECT * FROM ...</code> queries for each table.</td>
+      </tr>
+      <tr>
+        <td>Get By ID</td>
+        <td>Use all four Find by ID actions.</td>
+        <td>Compare with targeted <code>SELECT ... WHERE id = ?</code> queries.</td>
+      </tr>
+      <tr>
+        <td>Update</td>
+        <td>Resubmit forms with an existing id and changed values.</td>
+        <td>Run a matching query and confirm the changed fields.</td>
+      </tr>
+      <tr>
+        <td>RSVP by Event</td>
+        <td>Use Show RSVPs by Event ID.</td>
+        <td><code>SELECT * FROM rsvps WHERE event_id = ?;</code></td>
+      </tr>
+      <tr>
+        <td>Delete</td>
+        <td>Delete RSVP, Event, Attendee, then Venue.</td>
+        <td>Confirm each record no longer exists.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Required Screenshot Evidence</h2>
+  <ul>
+    <li>Frontend connection success</li>
+    <li>Create, update, get all, get by id, and delete actions in the client</li>
+    <li>Matching MySQL query output for each tested action</li>
+    <li>Optional validation error example</li>
+  </ul>
+
+  <h2>AI Development Record</h2>
+  <p>The repository does not store original prompt history, so these are reconstructed examples that should be replaced with the exact prompts if available.</p>
+  <ul>
+    <li>Data layer prompt: generate MySQL schema and Java DAO CRUD classes for venues, attendees, events, and RSVPs.</li>
+    <li>Business/service prompt: generate validation and service classes for the campus RSVP project.</li>
+    <li>API prompt: generate Spring Boot REST controllers with GET, POST, and DELETE endpoints.</li>
+    <li>Client prompt: generate a simple HTML/CSS/JS frontend for full CRUD plus RSVP lookup by event id.</li>
+  </ul>
+
+  <h2>Manual Changes Made</h2>
+  <ul>
+    <li>Moved DB connection settings to environment variables with local defaults.</li>
+    <li>Updated assignment-facing text from Project 3 to Project 4.</li>
+    <li>Added the combined deployment and system test documentation.</li>
+  </ul>
+
+  <h2>Current Workspace Verification</h2>
+  <p><code>mvn -q -DskipTests package</code> completed successfully in this workspace. A full live system test was not executed here because the local MySQL service was not running at verification time.</p>
+
+  <p class="note">Before final submission, start MySQL, run the application, capture the required screenshots, and export this document to PDF for the repo root if you replace or extend the current contents.</p>
+</body>
+</html>
